@@ -1,0 +1,156 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% 
+% Basic Beamer Theme for Lancaster University Leipzig
+% Corporate Identity of July 2021
+% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+
+
+\mode<presentation>
+
+% main themes to be used in this beamer theme
+%\usecolortheme{orchid}
+%\usecolortheme{whale}
+\useinnertheme[shadow=true]{rounded}
+\useoutertheme{shadow}
+
+% Corporate Brand of LU Leipzig
+\definecolor{UniMain}{RGB}{181,18,27}
+\definecolor{UniSec}{RGB}{190,192,194}
+\definecolor{UniTert}{RGB}{85,86,86}
+\definecolor{UniRed}{RGB}{197,82,101}
+\definecolor{UniGreen}{RGB}{0,169,92}
+
+% set color scheme to uni colours
+\setbeamercolor{palette primary}{fg=white, bg=UniMain}
+\setbeamercolor{palette secondary}{fg=white, bg=UniMain}
+\setbeamercolor{palette tertiary}{fg=white, bg=UniMain}
+\setbeamercolor{palette quaternary}{fg=white, bg=UniTert}
+\setbeamercolor{structure}{fg=UniMain}
+
+\setbeamercolor{frametitle right}{bg=white}
+
+
+% remove this if you want UniBlue items (or overwrite for something funky) 
+\setbeamercolor{item}{fg=UniSec}
+\setbeamercolor{item projected}{fg=black}
+
+% the following lines overwrite the normal example and alert block colors
+% even though these are "official" university brand colours, I am not a big
+% fan of them... use them at your own discretion
+% set color of alert
+\setbeamercolor{alerted text}{fg=UniRed, bg=white}
+% set color of example
+\setbeamercolor{example text}{fg=UniGreen, bg=white}
+
+% set university logo
+\titlegraphic{\hfill\includegraphics[height=0.9cm]{LZSCCslides/LUL_logo}}
+
+% set itemize items 
+\setbeamertemplate{itemize items}[triangle]
+% set enumerations to squares, since balls look horrible in gold
+\setbeamertemplate{enumerate item}[square]{}
+
+% remove navigation symbols
+\setbeamertemplate{navigation symbols}{}
+
+\setbeamerfont{block title}{size=\Large}
+\setbeamerfont{footline}{size=\fontsize{5}{10}\selectfont}
+\setbeamertemplate{background canvas}[bottom=white!10,top=white!10]
+
+
+% footline made of 2 blocks, where the left (authors) is less wide than the right (title) 
+\setbeamertemplate{footline}
+{%
+
+  \ifnum \theframenumber=1
+    % do nothing
+  \else
+
+    \hbox{%
+        \begin{beamercolorbox}[wd=0.25\textwidth,ht=2.5ex,dp=1.1ex,leftskip=.5em,rightskip=.5em]{author in head/foot}%
+            \usebeamerfont{author in head/foot}%
+             \insertsubtitle%
+        \end{beamercolorbox}%
+        \begin{beamercolorbox}[wd=0.5\textwidth,ht=2.5ex,dp=1.1ex,leftskip=.5em,rightskip=.5em]{author in head/foot}%
+            \usebeamerfont{author in head/foot}%
+            \centering%
+            Week~\week~ | ~\inserttitle %
+        \end{beamercolorbox}%
+        \begin{beamercolorbox}[wd=0.25\textwidth,ht=2.5ex,dp=1.1ex,leftskip=.5em,rightskip=.5em]{author in head/foot}%
+            \usebeamerfont{author in head/foot}%
+        \hfill\insertframenumber/\inserttotalframenumber%
+        \end{beamercolorbox}%
+    }
+
+  \fi
+}
+
+
+% set headline to be horizontal navigation bar
+\setbeamertemplate{headline}
+{%
+  %  \begin{beamercolorbox}[wd=1\textwidth,ht=3ex,dp=1.5ex,leftskip=.5em,rightskip=.5em]{palette quaternary}
+ %   \insertsectionnavigationhorizontal{\paperwidth}{\hskip0pt}{\hskip0pt}%
+ % \end{beamercolorbox}%
+}
+
+
+% set title page so that the logo is on the top left
+% otherwise the titlepage is taken from Warsaw (similar to default) theme
+\setbeamertemplate{title page}
+{
+    \vspace{-0.425cm}
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=center] at (current page.center){%
+        \scalebox{0.475}{
+            \pgfimage{LZSCCslides/LZSCC-TitlePage.png}
+        }
+      };
+    \end{tikzpicture}
+
+    
+    \vskip10em\par
+    
+    \hspace{-0.7cm}
+    \begin{beamercolorbox}[sep=8pt,left]{author}
+      {\usebeamerfont{author}\huge\textcolor{white}{\inserttitle}}\\[0.2cm]
+      {\usebeamerfont{author}\large\textcolor{white}{\insertsubtitle~|~Week \week}}
+    \end{beamercolorbox}
+    \vskip3em
+    \hspace{-0.7cm}
+    \begin{beamercolorbox}[sep=8pt,left]{author}
+      \usebeamerfont{author}\textcolor{white}{\insertauthor}
+    \end{beamercolorbox}
+    \vskip-0.5em
+    \hspace{-0.7cm}
+  
+}
+
+\AtBeginSection[]{
+  
+  \begingroup
+  \setbeamertemplate{footline}{}
+  \begin{frame}
+    ~\\[-0.1cm]
+    {\usebeamercolor[fg]{titlegraphic}\inserttitlegraphic\par}
+    \vspace{1.55cm}
+    \begin{centering}
+        \begin{beamercolorbox}[sep=8pt,center,rounded=true,shadow=true]{title}
+        \usebeamerfont{title}\usebeamercolor[fg]{title}\week.\thesection\par
+        \vspace{0.1cm}%
+        \usebeamerfont{title}\insertsectionhead\par%
+        \end{beamercolorbox}%
+        \vspace{1.8cm}
+        \begin{beamercolorbox}[sep=6pt,center]{author}
+        \usebeamerfont{author}\insertauthor
+        \end{beamercolorbox}
+        \begin{beamercolorbox}[sep=6pt,center]{institute}
+        \usebeamerfont{institute}\insertinstitute
+        \end{beamercolorbox}
+    \end{centering}
+    %\vfill
+  \end{frame}
+  \endgroup
+}
+\mode<all>

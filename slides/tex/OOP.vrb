@@ -1,0 +1,19 @@
+\frametitle{\textbf {Composition vs Inheritance (when to choose which)}}
+\begin{columns}[T,onlytextwidth]
+		\column{0.50\textwidth}
+		\textbf{Inheritance (is-a)}
+		\begin{itemize}
+			\item \textit{Pros}: Simple reuse, polymorphism via base type.
+			\item \textit{Cons}: Tight coupling to base; fragile base class; LSP risks.
+			\item \textit{Use when}: True subtype, stable base API, shared behaviour.
+		\end{itemize}
+		\column{0.50\textwidth}
+		\textbf{Composition (has-a)}
+		\begin{itemize}
+			\item \textit{Pros}: Replaceable parts, multiple change axes, better encapsulation.
+			\item \textit{Cons}: More wiring; no automatic access to base internals.
+			\item \textit{Use when}: Need variability, combine features, avoid deep trees.
+		\end{itemize}
+	\end{columns}
+	\vspace{0.9em}
+	\textbf{Remarks:} Prefer composition for flexibility; use inheritance for true subtyping with stable behaviour.

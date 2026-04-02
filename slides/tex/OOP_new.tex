@@ -1,0 +1,160 @@
+\documentclass[11pt,aspectratio=169]{beamer}
+
+\usetheme{default}
+\setbeamertemplate{navigation symbols}{}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{xcolor}
+\usepackage{listings}
+
+% Listings (Java)
+\lstset{
+	language=Java,
+	basicstyle=\ttfamily\footnotesize,
+	keywordstyle=\bfseries\color{blue!70!black},
+	commentstyle=\itshape\color{teal!60!black},
+	stringstyle=\color{red!60!black},
+	showstringspaces=false,
+	columns=flexible,
+	tabsize=2,
+	breaklines=true,
+	frame=single,
+	numbers=none,
+	numbersep=6pt
+}
+
+\title{Inheritance vs Composition in \textbf{OOP}}
+\author{Micro‑Course (10 minutes)}
+\date{}
+
+\begin{document}
+	
+	\begin{frame}
+		\titlepage
+	\end{frame}
+	
+	% Slide 1 — OOP in 60 seconds
+	\begin{frame}[fragile]{\textbf{OOP} in 60 seconds}
+		\begin{itemize}
+			\item We model software as \textbf{objects}: \textbf{state} + \textbf{behavior}.
+			\item A \textbf{class} is a blueprint; it defines attributes and methods.
+			\item Why it matters: \textbf{encapsulation}, \textbf{reuse}, \textbf{polymorphism}.
+		\end{itemize}
+		\medskip
+		\begin{lstlisting}
+			// Object = state + behavior
+			final class BankAccount {
+				private final String owner;            // state
+				private int balance;                   // state
+				public BankAccount(String o, int b){ owner=o; balance=b; }
+				public void deposit(int amount){ if(amount>0) balance += amount; } // behavior
+			}
+		\end{lstlisting}
+	\end{frame}
+	
+	% Slide 2 — Inheritance (is-a)
+	\begin{frame}[fragile]{\textbf{Inheritance} (\textbf{is-a})}
+		\begin{itemize}
+			\item A subclass \textbf{extends} a base class to reuse and specialize behavior.
+			\item Use when subtype truly \textbf{is-a} base and respects \textbf{LSP} (Liskov Substitution Principle).
+		\end{itemize}
+		\medskip
+		\begin{lstlisting}
+			abstract class Shape { abstract int area(); }
+			
+			final class Rectangle extends Shape {
+				private final int w, h;
+				Rectangle(int w, int h){ this.w=w; this.h=h; }
+				@Override int area(){ return w * h; }
+			}
+		\end{lstlisting}
+		\textbf{Pros}: simple reuse, \textbf{polymorphism} via base type.
+		\quad \textbf{Cons}: tight coupling, fragile base, LSP risks.
+	\end{frame}
+	
+	% Slide 3 — Composition (has-a, delegation)
+	\begin{frame}[fragile]{\textbf{Composition} (\textbf{has-a}, \textbf{delegation})}
+		\begin{itemize}
+			\item A class \textbf{has} components and \textbf{delegates} work to them.
+			\item Use when behavior varies across instances or may change over time.
+		\end{itemize}
+		\medskip
+		\begin{lstlisting}
+			interface Engine { void start(); int hp(); }
+			
+			final class ElectricEngine implements Engine {
+				public void start() { /* ... */ }
+				public int hp() { return 250; }
+			}
+			
+			final class Car {
+				private final Engine engine;                  // has-a
+				Car(Engine e){ this.engine = e; }
+				void start(){ engine.start(); }               // delegation
+				int power(){ return engine.hp(); }
+			}
+		\end{lstlisting}
+		\textbf{Pros}: flexibility, testability, better \textbf{encapsulation}.
+		\quad \textbf{Cons}: a bit more wiring.
+	\end{frame}
+	
+	% Slide 4 — Side-by-side comparison
+	\begin{frame}[fragile]{\textbf{Inheritance} vs \textbf{Composition}}
+		\begin{columns}[T,onlytextwidth]
+			\column{0.5\textwidth}
+			\textbf{Inheritance (\textit{is-a})}
+			\begin{itemize}
+				\item \textbf{Pros}: shared code, natural \textbf{polymorphism}.
+				\item \textbf{Cons}: tight coupling, \textbf{fragile base class}.
+				\item \textbf{Use when}: stable base API; subtype truly \textbf{is-a} supertype and honors \textbf{LSP}.
+			\end{itemize}
+			
+			\column{0.5\textwidth}
+			\textbf{Composition (\textit{has-a})}
+			\begin{itemize}
+				\item \textbf{Pros}: replaceable parts, multiple change axes, strong \textbf{encapsulation}.
+				\item \textbf{Cons}: more boilerplate/delegation.
+				\item \textbf{Use when}: need runtime variability; avoid deep hierarchies.
+			\end{itemize}
+		\end{columns}
+		\medskip
+		\textbf{Rule of thumb}: Prefer \textbf{composition} for flexibility; use \textbf{inheritance} for true subtyping with stable behavior.
+	\end{frame}
+	
+	% Slide 5 — Small refactor example (Decorator)
+	\begin{frame}[fragile]{Adding behavior via \textbf{composition} (Decorator)}
+		\begin{lstlisting}
+			final class LoggingEngine implements Engine {
+				private final Engine inner;                     // has-a
+				LoggingEngine(Engine e){ this.inner = e; }
+				public void start(){
+					System.out.println("[LOG] start");            // add behavior
+					inner.start();                                // delegate
+				}
+				public int hp(){ return inner.hp(); }
+			}
+		\end{lstlisting}
+		\begin{itemize}
+			\item No subclass of \textbf{Car}; no change to \textbf{Engine} types.
+			\item We \textbf{compose} features instead of building fragile trees.
+		\end{itemize}
+	\end{frame}
+	
+	% Slide 6 — Takeaways + mini-exercise
+	\begin{frame}[fragile]{\textbf{Takeaways} \& Mini‑exercise}
+		\textbf{Takeaways}
+		\begin{itemize}
+			\item \textbf{Encapsulation}: hide internals; expose a small, safe API.
+			\item \textbf{Inheritance} (\textbf{is-a}) vs \textbf{composition} (\textbf{has-a}): choose by \textbf{LSP}, variability, coupling.
+			\item Favor \textbf{composition} when behavior may change or combine.
+		\end{itemize}
+		\medskip
+		\textbf{30‑second exercise}
+		\begin{itemize}
+			\item Where would you add logging or caching using \textbf{composition} in the Car/Engine example?
+			\item When would \textbf{inheritance} still be the cleaner choice?
+		\end{itemize}
+	\end{frame}
+	
+\end{document}

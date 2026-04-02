@@ -1,0 +1,13 @@
+\frametitle{\textbf {Takeaways} \& Mini‑exercise}
+\textbf{Takeaways}
+		\begin{itemize}
+			\item \textbf{Encapsulation}: hide internals; expose a small, safe API.
+			\item \textbf{Inheritance} (\textbf{is-a}) vs \textbf{composition} (\textbf{has-a}): choose by \textbf{LSP}, variability, coupling.
+			\item Favor \textbf{composition} when behavior may change or combine.
+		\end{itemize}
+		\medskip
+		\textbf{30‑second exercise}
+		\begin{itemize}
+			\item Where would you add logging or caching using \textbf{composition} in the Car/Engine example?
+			\item When would \textbf{inheritance} still be the cleaner choice?
+		\end{itemize}

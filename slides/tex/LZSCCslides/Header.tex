@@ -1,0 +1,248 @@
+\PassOptionsToPackage{table,dvipsnames}{xcolor}
+
+%% ----------------------------------------------------------------------------
+%% command 'usetheme' searches in directory '../LZSCCslides' for *.sty files 
+\makeatletter
+\def\beamer@calltheme#1#2#3{%
+  \def\beamer@themelist{#2}
+  \@for\beamer@themename:=\beamer@themelist\do
+  {\usepackage[{#1}]{\beamer@themelocation/#3\beamer@themename}}}
+
+\def\usefolder#1{
+  \def\beamer@themelocation{#1}
+}
+\def\beamer@themelocation{}
+
+\usefolder{LZSCCslides}
+\usetheme[]{LUL}
+%% ----------------------------------------------------------------------------
+
+%% Site Packages %%
+% Required
+\usepackage[utf8]{inputenc}  	% Unterstützung für Unicode-Zeichen-Eingabe
+\usepackage[T1]{fontenc}      	% Unterstützung für Europäische-Zeichen-Ausgabe
+\usepackage{ae}               	% verbesserte Unterstützung für Umlaute  
+\usepackage[ngerman]{babel} 	% deutsche Übersetzungen und Wortumbrüche
+\usepackage{textcomp}
+
+% Additions
+\usepackage{amsmath}            % Erweiterung Mathematisch Umgebung
+\usepackage{tabularx}           % Gestaltung Tabellen 
+\usepackage{booktabs}           % Gestaltung Tabellen (zusaetzl. Optionen)
+\usepackage{hyperref}           % Links
+
+\usepackage{graphicx}           % Einbindung Bilder, Grafiken
+\usepackage{epstopdf}           % Einbindung EPS-Bilder
+\usepackage{tikz}               % Eigene Erstellung von Grafiken
+\usetikzlibrary{positioning}
+\usepackage{svg}                % svg-Bilder einbinden
+
+\usepackage{xcolor}             % Verwendung Farben fuer Schrift / Elementen
+\usepackage{adjustbox}          % Makros fuer Boxen / Text justierung
+\usepackage{tcolorbox}          % Erstellung Boxen (Bspw. fuer Definitionen)
+\usepackage{varwidth}           % Umgebung fuer Variable Textbreite (codebox)
+\usepackage{setspace}			      % setstretch 
+
+\usepackage{listings}			      % Programm-Code
+\usepackage{multicol}           % mehrere Spalten
+\usepackage{multirow}           % multirow fuer bessere Tabellen
+ 
+\usepackage{pgfplots}           % HQ Funktion-Plots direkt in TeX erzeugen
+\usepgfplotslibrary{dateplot}
+\usepackage{xspace}             % Hilfe fuer Leerzeichen nach eigenen Makro-Defintionen
+
+% In order to avoid BigBlueButton problems (converting errors with fonts)
+\usepackage{lmodern}
+
+\usepackage{xpatch}
+
+
+%% Farben =====================================================================
+% Unifarben
+\definecolor{uniDarkRed}{HTML}{B02F2C}      % granat
+\definecolor{uniLightRed}{HTML}{D8413E}     % karneol
+\definecolor{uniLightBlue}{HTML}{8AC2D1}    % aquamarin
+\definecolor{uniLightGrey}{HTML}{C9C9C9}    % grau (hell)
+\definecolor{uniLightBlack}{HTML}{262A31}   % basalt
+\definecolor{lightYellow}{HTML}{FFF60C}     % gelb
+
+% Codefarben
+\definecolor{pblue}{rgb}{0.13,0.13,1}
+\definecolor{pgreen}{rgb}{0,0.5,0}
+\definecolor{pred}{rgb}{0.9,0,0}
+\definecolor{pgrey}{rgb}{0.46,0.45,0.48}
+
+
+%% Einstellung Folien =========================================================
+
+% Aufzaehlungen itemize/enumerate (Farbe)
+%FORM?
+% \setbeamertemplate{itemize items}{\tiny{$\blacksquare$}}
+% \setbeamertemplate{itemize subitem}{$\bullet$}
+
+\setbeamercolor{item}{fg=uniDarkRed, bg=uniLightBlack}
+\setbeamercolor{subitem}{fg=uniLightRed, bg=uniLightGrey}
+\setbeamercolor{subsubitem}{fg=uniLightGrey, bg=uniLightGrey}
+
+% Fussleiste mit aktueller section
+\setbeamertemplate{frame footer}{%
+  \textcolor{gray}{\thesection\,|\,\textbf{\@currentlabelname}}
+}
+
+% Kapitelnummer auf den Section-Seiten, ueberschreibung THEME Einstellung
+\setbeamertemplate{section page}{
+  \centering
+  \begin{tikzpicture}
+    [remember picture, overlay]
+    \draw node[anchor=south east, align=right] at (0.25,0) (A) {{
+        \color{uniLightGrey!90}
+        \bfseries
+        \fontsize{60pt}{12pt}\selectfont
+        \thesection
+    }};
+    % \node[align=center] at ($(A.north)+(0.0,+0.3)$) {{
+    %     \color{uniLightGrey!70}\bfseries\MakeUppercase{Kapitel}
+    % }};
+  \end{tikzpicture}
+  \hspace*{0.3cm}
+  \begin{minipage}{22em}
+    \raggedright
+    \usebeamercolor[fg]{section title}
+    \usebeamerfont{section title}
+    \insertsectionhead\\[-1ex]
+    \usebeamertemplate*{progress bar in section page}
+    \par
+    \ifx\insertsubsectionhead\@empty\else%
+      \usebeamercolor[fg]{subsection title}%
+      \usebeamerfont{subsection title}%
+      \insertsubsectionhead
+    \fi
+  \end{minipage}
+  \par
+  %
+}
+
+% Frame title
+\setbeamerfont{frametitle}{series=\mdseries}
+\AtBeginDocument{\usebeamerfont{normal text}}
+
+% Adjust Table of Contents separation
+%\makeatletter
+%\patchcmd{\beamer@sectionintoc}{\vskip1.5em}{\vskip0.5em}{}{}
+%\makeatother
+
+
+%% Tikz Settings =========================================================
+% Libraries
+\usetikzlibrary{calc}
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{decorations.shapes}
+
+% Block styles
+\tikzset{
+	block1/.style   = {rectangle, draw=uniLightGrey, thick, fill=yellow!20, align=center, rounded corners},
+  block2/.style   = {rectangle, draw=black, thick, fill=uniLightBlack!20, align=center, font=\scriptsize\ttfamily},
+  line/.style     = {draw, thick, -latex', shorten >=2pt},
+  circle1/.style  = {circle,  draw=black, thick, align=center, font=\footnotesize\ttfamily},
+  decide1/.style  = {diamond,  draw=black, thick, fill=yellow!20, align=center, font=\footnotesize\ttfamily}
+}
+
+
+%% User-defined Commands / Environments ==============================================
+% Einrueckungen
+\newcommand{\boxskip}{\hspace*{7pt}}   
+\newcommand{\itemskip}{\hspace*{13pt}} % align listings mit itemize Umgebung
+\newcommand{\codeskip}{\hspace*{35pt}} % align listings mit 1. Ebene Anfuehrung (mit ZEICHEN)
+
+% Text
+\newcommand{\textcode}[2]{{\ttfamily\color{#1} #2}}
+\newcommand{\dbl}[0]{\textquotedbl}
+\newcolumntype{C}[1]{>{\centering}p{#1}}
+
+% Codeboxes -----------------------------------------------
+%kleine Box
+\newcommand{\smallcodebox}[1]{ %
+  \fcolorbox{uniLightGrey!80}{white}{{\footnotesize\ttfamily #1}}\vspace*{2pt}
+}
+
+%BIg Box
+%DOES NOT WORK WITH \textcode (COLOR) (?) -> use \textcolor 
+%end text with \par, to avoid irregular line separation
+%optional: define color for box, e.g. \simplebox[pblue]{...}
+\newcommand{\simplebox}[2][black]{%
+  \vspace*{2pt}
+  \begin{tcolorbox}%
+    [hbox, size=small,  nobeforeafter,colback=white, %
+    colframe=uniLightGrey!80, boxrule = 1pt, shrink tight, %
+    sharp corners, boxsep = 5pt, left=0pt]
+    \color{#1}
+    \begin{varwidth}{\textwidth}
+      {\footnotesize\ttfamily\setstretch{1.0}
+          #2
+          \par
+      }
+    \end{varwidth}
+  \end{tcolorbox}
+  \vspace*{-2pt}
+}
+
+
+%% Code Style =================================================================
+\lstdefinestyle{basic}{
+  basicstyle=\ttfamily\scriptsize,
+  commentstyle=\color{pgreen},
+  keywordstyle=\color{pblue},
+  stringstyle=\color{pred},
+  moredelim=[il][\textcolor{pgrey}],
+  backgroundcolor=\color{uniLightGrey!30},
+  numbers=left,
+  numberstyle=\tiny\color{pgrey!80},
+  framexleftmargin=1em,
+  tabsize=2,
+  showtabs=false,
+  showspaces=false,                
+  showstringspaces=false,
+  breaklines=true
+}
+
+
+
+%% Backup =====================================================================
+%\newcommand{\backupbegin}{
+%   \newcounter{framenumberappendix}
+%   \setcounter{framenumberappendix}{\value{framenumber}}
+%}
+%\newcommand{\backupend}{
+%   \addtocounter{framenumberappendix}{-\value{framenumber}}
+%   \addtocounter{framenumber}{\value{framenumberappendix}} 
+%}
+
+\newenvironment<>{varblock}[2][.9\textwidth]{%
+  \setlength{\textwidth}{#1}
+  \begin{actionenv}#3%
+    \def\insertblocktitle{#2}%
+    \par%
+    \usebeamertemplate{block begin}
+}{\par%
+    \usebeamertemplate{block end}%
+  \end{actionenv}
+}
+
+
+\linespread{1.05} % manual set one-half spacing
+
+\xpatchcmd{\itemize}
+{\def\makelabel}
+{\ifnum\@itemdepth=1\relax
+    \setlength\itemsep{2ex}% separation for first level
+\else
+    \ifnum\@itemdepth=2\relax
+    \setlength\itemsep{1ex}% separation for second level
+    \else
+    \ifnum\@itemdepth=3\relax
+        \setlength\itemsep{0.75ex}% separation for third level
+\fi\fi\fi\def\makelabel
+}
+{}
+{}
+

@@ -1,0 +1,6 @@
+\babel@toc {ngerman}{}\relax 
+\beamer@sectionintoc {1}{\textbf {OOP Concepts}}{3}{0}{1}
+\beamer@sectionintoc {2}{\textbf {Inheritance vs Composition in OOP}}{7}{0}{2}
+\beamer@sectionintoc {3}{\textbf {Takeaway}}{14}{0}{3}
+\beamer@sectionintoc {4}{\textbf {Home Work 1.0}}{16}{0}{4}
+\beamer@sectionintoc {5}{\textbf {What Next?}}{18}{0}{5}
